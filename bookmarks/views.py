@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -6,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 
+from .filters import BookmarkFilter
 from .models import Bookmark, Collection
 from .permissions import IsOwner
 from .serializers import (
@@ -64,6 +66,9 @@ class BookmarkViewSet(ModelViewSet):
         IsAuthenticated,
         IsOwner,
     )
+
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = BookmarkFilter
 
     def get_serializer_class(self):
         if self.request.method == "GET":
