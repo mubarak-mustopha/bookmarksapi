@@ -4,20 +4,12 @@ from .models import Bookmark
 
 class BookmarkFilter(django_filters.FilterSet):
 
-    date_created = django_filters.DateFilter(field_name="created", lookup_expr="date")
-    date_created__lt = django_filters.DateFilter(
-        field_name="created", lookup_expr="date__lt"
-    )
-    date_created__gt = django_filters.DateFilter(
-        field_name="created", lookup_expr="date__gt"
-    )
+    created_on = django_filters.DateFilter(field_name="created", lookup_expr="date")
+    created = django_filters.DateFromToRangeFilter()
+
+    expires_on = django_filters.DateFilter(field_name="expiry_date", lookup_expr="date")
+    expires = django_filters.DateFromToRangeFilter(field_name="expiry_date")
 
     class Meta:
         model = Bookmark
-        fields = {
-            "expiry_date": [
-                "date",
-                "date__gt",
-                "date__lt",
-            ],
-        }
+        fields = ["created_on", "created", "expires_on", "expires"]
