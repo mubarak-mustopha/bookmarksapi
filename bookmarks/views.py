@@ -21,7 +21,7 @@ from .serializers import (
 # Create your views here.
 class CollectionModelViewSet(ModelViewSet):
     serializer_class = CollectionSerializer
-    queryset = Collection.objects.all()
+    queryset = Collection.objects.prefetch_related("children", "bookmark_set")
 
     permission_classes = (
         IsAuthenticated,
@@ -60,7 +60,7 @@ class CollectionModelViewSet(ModelViewSet):
 
 class BookmarkViewSet(ModelViewSet):
     serializer_class = BookmarkSerializer
-    queryset = Bookmark.objects.all()
+    queryset = Bookmark.objects.prefetch_related("collection", "tags")
 
     permission_classes = (
         IsAuthenticated,

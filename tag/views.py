@@ -10,7 +10,7 @@ from .serializers import BaseTagSerializer, TagSerializer
 # Create your views here.
 class TagModelViewSet(ModelViewSet):
     serializer_class = TagSerializer
-    queryset = Tag.objects.all()
+    queryset = Tag.objects.prefetch_related("bookmarks")
 
     permission_classes = (IsAuthenticated,)
 
